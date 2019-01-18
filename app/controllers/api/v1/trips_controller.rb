@@ -2,7 +2,7 @@ class Api::V1::TripsController < ApplicationController
     before_action :set_trip, only: [:show, :update, :destroy]
     
     def index
-        @trips = Trips.all 
+        @trips = Trip.all 
         render(json: @trips)
     end 
 

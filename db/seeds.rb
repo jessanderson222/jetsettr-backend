@@ -5,3 +5,23 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+require 'rest-client'
+require 'json'
+
+Country.destroy_all
+
+countryapi_url = 'http://countryapi.gear.host/v1/Country/getCountries'
+response = RestClient.get(countryapi_url)
+data = JSON.parse(response)
+countrydata = data["Response"]
+
+countrydata.each do |indcountry|
+   country = Country.new
+   country.name = indcountry["Name"]
+   country.region = indcountry["Region"]
+   country.subregion = indcountry["SubRegion"]
+   country.currency = indcountry["CurrencyName"]
+   country.save
+end 
+
+puts "done!"
